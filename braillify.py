@@ -11,7 +11,7 @@ import numpy as np
 
 parser = argparse.ArgumentParser(
     description="A little program that converts images to braille patterns. Distributed under GPL 3.0",
-    epilog="example usage: ./braillify.py -i sample.png -s=0.9 -w 60 -t")
+    epilog="example usage: ./braillify.py -i sample.jpg -s=0.9 -w 60 -t")
 parser.add_argument("-i", dest="source", required=True,
                     help="path to the image (required)")
 parser.add_argument("--inv", dest="invert", action="store_const", const=False, default=True,
