@@ -8,12 +8,15 @@ import PIL.Image
 import PIL.ImageEnhance
 import argparse
 import numpy as np
+import validators
+import requests
+from io import BytesIO
 
 parser = argparse.ArgumentParser(
     description="A little program that converts images to braille patterns. Distributed under GPL 3.0",
     epilog="example usage: ./braillify.py -i sample.jpg -s=0.9 -w 60 -t")
 parser.add_argument("-i", dest="source", required=True,
-                    help="path to the image (required)")
+                    help="path to the image or image url (required)")
 parser.add_argument("--inv", dest="invert", action="store_const", const=False, default=True,
                     help="invert image")
 parser.add_argument("-t", dest="time", action="store_const", const=True, default=False,
@@ -38,8 +41,12 @@ output = args.output
 
 start = time.perf_counter()
 parser.parse_args()
-image: PIL.Image.Image = PIL.Image.open(source, "r")
 
+if validators.url(source):
+    image: PIL.Image.Image = PIL.Image.open(BytesIO(requests.get(source, allow_redirects=True).content))
+else:
+    image: PIL.Image.Image = PIL.Image.open(source, "r")
+    
 image = image.convert("L")
 enchancer = PIL.ImageEnhance.Contrast(image)
 image = enchancer.enhance(contrast)
