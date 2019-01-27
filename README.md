@@ -3,7 +3,7 @@ Converts images to braille patterns
 
 ## Requirements
 
-Requires Python **3.6+** plus to run
+Requires Python **3.6+** to run
 
 ## Running
 
